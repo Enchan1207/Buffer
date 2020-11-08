@@ -3,26 +3,28 @@
 */
 #include "Buffer.h"
 
-int enBuffer(Buffer* buffer, Item item){
+int push(Buffer* buffer, Item item){
     int *tail = &(buffer->tail);
     int *head = &(buffer->head);
 
     // tailの次=head -> 満杯
-    if(((*tail) + 1) % (BUFFER_SIZE + 1) == *head){
-        return BUFFER_FULL;
+    if(((*tail) + 1) % (buffer->size + 1) == *head){
+        // popすることでバッファがいっぱいになるのを防ぐ
+        Item dust;
+        pop(buffer, &dust);
+        // return BUFFER_FULL;
     }
 
     // 末尾に追加し、ポインタを進める 配列の終端にきたら先頭に戻る
     buffer->data[*tail] = item;
     (*tail)++;
-    if(*tail > BUFFER_SIZE){
+    if(*tail > buffer->size){
         *tail = 0;
     }
-    buffer->length++;
     return BUFFER_OK;
 }
 
-int deBuffer(Buffer* buffer, Item* item){
+int pop(Buffer* buffer, Item* item){
     int *tail = &(buffer->tail);
     int *head = &(buffer->head);
 
@@ -34,9 +36,8 @@ int deBuffer(Buffer* buffer, Item* item){
     // 先頭から取り出し、ポインタを進める 配列の終端にきたら先頭に戻る
     *item = buffer->data[*head];
     (*head)++;
-    if(*head > BUFFER_SIZE){
+    if(*head > buffer->size){
         *head = 0;
     }
-    buffer->length--;
     return BUFFER_OK;
 }

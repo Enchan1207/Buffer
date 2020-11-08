@@ -1,18 +1,28 @@
-# Buffer
+# embedBuffer
 
 ## Overview
 
-Generic buffer implement written in C.(It supports multi-thread buffer using pthread and mutex.)  
+Generic buffer implement written in C.  
+**NOTE:** this repository is **minimized edition** for embedded device.  
+Some features such multithreading buffer is shrinked or abolished.
+
+## Latest developing features - dynamic buffer size!
+
+Now, you can define buffer size dynamic!  
+memory for new buffer will be allocated with initializer(`initBuffer` in Initialize.c).  
+Whenever as long as memory allows, you can define buffer of any size!  
 
 ## Usage
 
+### Generate sample program
+
  1. clone this repository.
- 1. `make` to generate `Buffer.dll`. (If you only make `Buffer.h`, you can use `make Buffer.dll`.)
+ 1. `make` to generate sample.
 
-### How to embed it to your projects
+### Embed it to your projects
 
-If you use buffer with single-thread system, you only need include `Buffer.h`.  
-But, buffer will be used with multi-thread system generally. In this case, you need include `BufferThreads.h` additional.  
+In details, see `main.c`.  
+(New dynamic buffer have significantly changed how to embed it, and this is likely to continue. sorry for ambiguous description.)  
 
 ## Licence
 
